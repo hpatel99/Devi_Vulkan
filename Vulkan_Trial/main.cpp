@@ -15,12 +15,19 @@ class Game
 public:
 	void run()
 	{
+		initWindow();
 		initVulkan();
 		MainLoop();
 		cleanup();
 
 	}
 private:
+	//This method intialize all glfw window stuff. 
+	void initWindow()
+	{
+
+	}
+
 	void initVulkan()
 	{
 
