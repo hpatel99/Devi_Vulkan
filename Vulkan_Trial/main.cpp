@@ -22,9 +22,23 @@ public:
 
 	}
 private:
+
+	// Private varaible for this class
+	GLFWwindow *window;
+	const uint32_t WIDTH = 800;
+	const uint32_t HEIGHT = 600;
+
 	//This method intialize all glfw window stuff. 
 	void initWindow()
 	{
+		glfwInit();
+
+		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // make window not resizeable
+
+		window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan window", nullptr, nullptr);
+
+
 
 	}
 
@@ -32,13 +46,21 @@ private:
 	{
 
 	}
+
 	void MainLoop()
 	{
-
+		while (!glfwWindowShouldClose(window)) 
+		{
+			glfwPollEvents();
+		}
 	}
+
+	//Remove window and memory Cleanup
 	void cleanup()
 	{
+		glfwDestroyWindow(window);
 
+		glfwTerminate();
 	}
 
 };
@@ -60,10 +82,7 @@ int main() {
 	}
 
 	return EXIT_SUCCESS;
-	//glfwInit();
-
-	//glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-	//GLFWwindow* window = glfwCreateWindow(800, 600, "Vulkan window", nullptr, nullptr);
+	
 
 	//uint32_t extensionCount = 0;
 	//vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
@@ -74,12 +93,8 @@ int main() {
 	//glm::vec4 vec;
 	//auto test = matrix * vec;
 
-	//while (!glfwWindowShouldClose(window)) {
-	//	glfwPollEvents();
-	//}
+	
 
-	//glfwDestroyWindow(window);
-
-	//glfwTerminate();
+	
 
 }
