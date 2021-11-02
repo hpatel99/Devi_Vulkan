@@ -15,6 +15,9 @@ class Game
 public:
 	void run()
 	{
+		initVulkan();
+		MainLoop();
+		cleanup();
 
 	}
 private:
