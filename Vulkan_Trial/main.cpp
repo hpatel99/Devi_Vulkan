@@ -43,8 +43,26 @@ private:
 
 	}
 
+	//intialize vulkan instance
 	void initVulkan()
 	{
+		//App info .. this one is optional but gives more info.. .we will see if it useful in future. Else will cull it
+		VkApplicationInfo appInfo;
+		appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+		appInfo.pApplicationName = "Game";
+		appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
+		appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+		appInfo.pEngineName = "None???";
+		appInfo.apiVersion = VK_API_VERSION_1_0;
+
+		// Create_info this is not optional and defines validation layer app wide and not limited to device.
+		// What does this mean?? i dont know will find in future
+
+		VkInstanceCreateInfo createInfo;
+		createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+		createInfo.pApplicationInfo = &appInfo;
+
+
 
 	}
 
