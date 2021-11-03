@@ -25,9 +25,9 @@ private:
 
 	// Private varaible for this class
 	GLFWwindow *window;
-	VkInstance *instance;
 	const uint32_t WIDTH = 800;
 	const uint32_t HEIGHT = 600;
+	VkInstance instance;
 
 	//This method intialize all glfw window stuff. 
 	void initWindow()
@@ -46,24 +46,43 @@ private:
 	//intialize vulkan instance
 	void initVulkan()
 	{
+		//VkInstance instance;
+
 		//App info .. this one is optional but gives more info.. .we will see if it useful in future. Else will cull it
-		VkApplicationInfo appInfo;
+		VkApplicationInfo appInfo{};
 		appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
 		appInfo.pApplicationName = "Game";
-		appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-		appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+		appInfo.applicationVersion = VK_MAKE_VERSION(1,0,0);
+		appInfo.engineVersion = VK_MAKE_VERSION(1,0,0);
 		appInfo.pEngineName = "None???";
 		appInfo.apiVersion = VK_API_VERSION_1_0;
 
 		// Create_info this is not optional and defines validation layer app wide and not limited to device.
 		// What does this mean?? i dont know will find in future
 
-		VkInstanceCreateInfo createInfo;
+		VkInstanceCreateInfo createInfo{};
 		createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 		createInfo.pApplicationInfo = &appInfo;
 
+		//variable to store the extensions supported
+		uint32_t extensionCount = 0;
 
+		//glfw extention
+		const char** glfwExtensions;
 
+		//Get instance and we get the extensions supported
+		glfwExtensions = glfwGetRequiredInstanceExtensions(&extensionCount);
+
+		//passing extension to create info structs
+		createInfo.enabledExtensionCount = extensionCount;
+		createInfo.ppEnabledExtensionNames = glfwExtensions;
+		createInfo.enabledLayerCount = 0;
+		VkResult result = vkCreateInstance(&createInfo, nullptr, &instance);
+
+		if (result != VK_SUCCESS)
+		{
+			throw runtime_error("failed to create instance!");
+		}
 	}
 
 	void MainLoop()
@@ -101,19 +120,4 @@ int main() {
 	}
 
 	return EXIT_SUCCESS;
-	
-
-	//uint32_t extensionCount = 0;
-	//vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
-
-	//std::cout << extensionCount << " extensions supported\n";
-
-	//glm::mat4 matrix;
-	//glm::vec4 vec;
-	//auto test = matrix * vec;
-
-	
-
-	
-
 }
